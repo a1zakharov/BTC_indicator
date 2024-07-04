@@ -1,8 +1,6 @@
 import yfinance as yf
 import pandas as pd
 from ta.momentum import WilliamsRIndicator
-import schedule
-import time
 
 
 def main():
@@ -12,12 +10,3 @@ def main():
     btc.to_csv('btc_data.csv')
     
     return btc
-
-# print(main().tail(50))
-
-schedule.every().hours.do(main)
-
-while True:
-    schedule.run_pending()
-    time.sleep(5)
-    
