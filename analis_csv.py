@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 
-ef = pd.read_csv("E:/python_project/BTC/btc_data.csv", index_col='Datetime')
+ef = pd.read_csv("btc_data.csv", index_col='Datetime')
 
 print(len(ef))
 print(ef[-24:])
