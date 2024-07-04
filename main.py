@@ -1,8 +1,7 @@
 import yfinance as yf
 import pandas as pd
 from ta.momentum import WilliamsRIndicator
-import schedule
-import time
+
 
 
 def main():
@@ -16,9 +15,6 @@ def main():
 
 # print(main().tail(50))
 
-schedule.every().minute.at(":46").do(main)
 
-while True:
-        schedule.run_pending()
-        time.sleep(1)
-    
+if __name__ == '__main__':
+    main()
