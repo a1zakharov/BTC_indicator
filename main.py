@@ -10,14 +10,15 @@ def main():
     btc['WR'] = WilliamsRIndicator(high=btc['High'], low=btc['Low'], close=btc['Close'], lbp= 14, fillna= False).williams_r()
     btc['WR<-80'] = btc['WR'] < -80
     btc.to_csv('btc_data.csv')
+    print('🟢', end='')
     
     return btc
 
 # print(main().tail(50))
 
-schedule.every().hours.do(main)
+schedule.every().minute.at(":46").do(main)
 
 while True:
-    schedule.run_pending()
-    time.sleep(5)
+        schedule.run_pending()
+        time.sleep(1)
     
