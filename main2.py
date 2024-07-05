@@ -7,6 +7,7 @@ import time
 
 
 def main():
+    bot = telebot.TeleBot(config.API_TOKEN)
     btc = yf.Ticker("BTC-USD").history(interval='1h', period="1y").reset_index()[['Datetime', 
                                                                                   'Open', 
                                                                                   'Close', 
@@ -19,18 +20,12 @@ def main():
     res = btc.tail(1)['WR<-80'].iloc[0]
     
     if res == True:
-        return '🟢'
+        bot.send_message(config.CHANNEL_LOGIN,  '🟢')
     else:
-        return '🔵'
-       
+        bot.send_message(config.CHANNEL_LOGIN,  '🔵')
 
 
-def telegram_bot():
-    bot = telebot.TeleBot(config.API_TOKEN)
-    bot.send_message(config.CHANNEL_LOGIN,  main())
-
-
-schedule.every(65).minutes.do(telegram_bot)
+schedule.every(61).minutes.do(main)
 
 while True:
         schedule.run_pending()
