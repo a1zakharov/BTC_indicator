@@ -18,9 +18,3 @@ def indicator():
     else:
         mess = '🔴'
         print(mess, end='')
-
-schedule.every().hours.do(indicator())
-
-while True:
-    schedule.run_pending()
-    time.sleep(5)
