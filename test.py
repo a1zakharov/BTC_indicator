@@ -21,11 +21,11 @@ def main():
     btc['WR<-80'] = btc['WR'] < -80
     res = btc.tail(1)['WR'].iloc[0] 
     if res < -80:
-        bot.send_message(config.CHANNEL_LOGIN, "BTC in the oversold zone")
+        bot.send_message(config.CHANNEL_LOGIN, "🟢BTC in the oversold zone")
     elif res > -80 and res < -20:
-        bot.send_message(config.CHANNEL_LOGIN, "BTC neutral")
+        bot.send_message(config.CHANNEL_LOGIN, "🔵BTC neutral")
     elif res  >  -20:
-        bot.send_message(config.CHANNEL_LOGIN, "BTC in the overbought zone")
+        bot.send_message(config.CHANNEL_LOGIN, "🟡BTC in the overbought zone")
 
     
 schedule.every(61).minutes.do(main)
