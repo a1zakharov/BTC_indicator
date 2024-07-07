@@ -5,7 +5,6 @@ import config
 import schedule
 import time
 
-
 bot = telebot.TeleBot(config.API_TOKEN)
 
 
@@ -24,6 +23,7 @@ def telegram_message():
         bot.send_message(config.CHANNEL_LOGIN, "🔵BTC neutral")
     elif value_indicator  >  -20:
         bot.send_message(config.CHANNEL_LOGIN, "🟡BTC in the overbought zone")
+
         
 schedule.every(240).minutes.do(telegram_message)
 
