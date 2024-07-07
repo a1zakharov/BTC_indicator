@@ -1,21 +1,32 @@
 import yfinance as yf
-import pandas as pd
 from ta.momentum import WilliamsRIndicator
+import telebot
+import config
 import schedule
 import time
 
 
-def data_parc():
-    btc = yf.Ticker("BTC-USD").history(interval='1h', period="1y").reset_index()[['Datetime', 
-                                                                                  'Open', 
-                                                                                  'Close', 
-                                                                                  'Low', 
-                                                                                  'High', 
-                                                                                  'Volume']]
-    btc['WR'] = WilliamsRIndicator(high=btc['High'], low=btc['Low'], 
-                                   close=btc['Close'], lbp= 14, fillna= False).williams_r()
-    btc['WR<-80'] = btc['WR'] < -80
-    btc.to_csv('btc_data.csv')
-    print('🟢', end='')
-    
-data_parc()
+bot = telebot.TeleBot(config.API_TOKEN)
+
+
+def data_btc():
+    btc = yf.Ticker("BTC-USD").history(interval='1h', period="1y").reset_index()[['Datetime', 'Open', 'Close', 'Low', 'High', 'Volume']]
+    btc['Williams'] = WilliamsRIndicator(high=btc['High'], low=btc['Low'], close=btc['Close'], lbp= 14, fillna= False).williams_r()
+
+    return btc.tail(1)['Williams'].iloc[0]
+
+
+def telegram_message():
+    value_indicator = data_btc()
+    if value_indicator < -80:
+        bot.send_message(config.CHANNEL_LOGIN, "🟢BTC in the oversold zone")
+    elif value_indicator > -80 and value_indicator < -20:
+        bot.send_message(config.CHANNEL_LOGIN, "🔵BTC neutral")
+    elif value_indicator  >  -20:
+        bot.send_message(config.CHANNEL_LOGIN, "🟡BTC in the overbought zone")
+        
+schedule.every(240).minutes.do(telegram_message)
+
+while True:
+        schedule.run_pending()
+        time.sleep(1)
