@@ -25,7 +25,7 @@ def telegram_message():
     elif value_indicator  >  -20:
         bot.send_message(config.CHANNEL_LOGIN, "🟡BTC in the overbought zone")
         
-schedule.every(1).minutes.do(telegram_message)
+schedule.every(240).minutes.do(telegram_message)
 
 while True:
         schedule.run_pending()
