@@ -50,7 +50,7 @@ def сreating_message_SUPERT():
     return message
 
         
-schedule.every().hour.at(":05").do(telegram_message)
+schedule.every().hour.at(":06").do(telegram_message)
 # schedule.every(1).minutes.do(telegram_message)
 while True:
         schedule.run_pending()
