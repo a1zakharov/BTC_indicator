@@ -5,6 +5,7 @@ import config
 import schedule
 import time
 import pandas as pd
+from datetime import datetime
 
 bot = telebot.TeleBot(config.API_TOKEN)
 
@@ -19,13 +20,15 @@ def value_williams():
 def telegram_message():
     value_indicator = value_williams()
     if value_indicator < -80:
-        bot.send_message(config.CHANNEL_LOGIN, "🟢BTC in the oversold zone")
+        bot.send_message(config.CHANNEL_LOGIN, "🔴 BTC in the oversold zone"+'\n'+сreating_message_SUPERT())
     elif value_indicator > -80 and value_indicator < -20:
-        bot.send_message(config.CHANNEL_LOGIN, "🔵BTC neutral")
+        bot.send_message(config.CHANNEL_LOGIN, "🔵 BTC neutral"+'\n'+сreating_message_SUPERT())
     elif value_indicator  >  -20:
-        bot.send_message(config.CHANNEL_LOGIN, "🟡BTC in the overbought zone")
-    
-    bot.send_message(config.CHANNEL_LOGIN, сreating_message_SUPERT())
+        bot.send_message(config.CHANNEL_LOGIN, "🟢 BTC in the overbought zone"+'\n'+сreating_message_SUPERT())
+        
+    print(datetime.now().strftime("%H:%M:%S"))
+        
+
         
         
 def supertrend():
@@ -50,8 +53,8 @@ def сreating_message_SUPERT():
     return message
 
         
-schedule.every().hour.at(":06").do(telegram_message)
-# schedule.every(1).minutes.do(telegram_message)
+# schedule.every().hour.at(":06").do(telegram_message)
+schedule.every(1).minutes.do(telegram_message)
 while True:
         schedule.run_pending()
         time.sleep(1)
