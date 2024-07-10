@@ -19,6 +19,7 @@ def value_williams():
 
 def telegram_message():
     value_indicator = value_williams()
+    
     if value_indicator < -80:
         bot.send_message(config.CHANNEL_LOGIN, "🔴 BTC in the oversold zone"+'\n'+сreating_message_SUPERT())
     elif value_indicator > -80 and value_indicator < -20:
@@ -41,8 +42,8 @@ def supertrend():
         
 def сreating_message_SUPERT():
     SUPERT_res = supertrend()[1].tolist()
-    
     SUPERTd = supertrend()[0].tolist()
+    
     if SUPERTd == 1:
         message = "🟢"
     elif SUPERTd == -1:
@@ -53,8 +54,8 @@ def сreating_message_SUPERT():
     return message
 
         
-# schedule.every().hour.at(":06").do(telegram_message)
-schedule.every(1).minutes.do(telegram_message)
+schedule.every().hour.at(":06").do(telegram_message)
+# schedule.every(1).minutes.do(telegram_message)
 while True:
         schedule.run_pending()
         time.sleep(1)
